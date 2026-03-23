@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AlexGPT</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background-image:url("fond.jpg");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+color:#ff7a00;
+}
+
+.header{
+background:black;
+padding:20px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+}
+
+.header span{
+color:orange;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.chat{
+background:rgba(0,0,0,0.85);
+padding:20px;
+border-radius:10px;
+}
+
+input{
+width:80%;
+padding:12px;
+border:none;
+border-radius:5px;
+}
+
+button{
+padding:12px;
+background:orange;
+border:none;
+border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+}
+
+a{
+color:yellow;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+Alex<span>GPT</span>
+</div>
+
+<div class="container">
+
+<div class="chat">
+
+<h2>Chat avec AlexGPT</h2>
+
+<input placeholder="Écris ton message...">
+<button>Envoyer</button>
+
+</div>
+
+</div>
+
+</body>
+</html>

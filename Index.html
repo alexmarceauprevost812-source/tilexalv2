@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlexGPT</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body{background:#0b0b0b;color:#ff7a00;font-family:Arial;margin:0;text-align:center}
+    header{padding:28px 12px;font-size:34px;font-weight:700}
+    nav{background:#111;padding:14px}
+    nav a{color:#ffd400;margin:0 12px;text-decoration:none;font-weight:700}
+    .wrap{width:92%;max-width:720px;margin:22px auto}
+    .chat{background:#111;border-radius:12px;padding:16px}
+    #messages{height:380px;overflow:auto;text-align:left;background:#0e0e0e;border-radius:10px;padding:12px}
+    .row{display:flex;gap:10px;margin-top:10px}
+    input{flex:1;padding:12px;background:#000;color:#ff7a00;border:1px solid #ff7a00;border-radius:10px}
+    button{padding:12px 16px;background:#ff7a00;color:#000;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+    .me b{color:#ffd400}
+    .bot b{color:#ff7a00}
+    .bubble{margin:10px 0;line-height:1.35}
+  </style>
+</head>
+
+<body>
+  <header>🤖 AlexGPT</header>
+
+  <nav>
+    <a href="#">Accueil</a>
+    <a href="#">IA</a>
+    <a href="#">Projets</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="wrap">
+    <div class="chat">
+      <div id="messages"></div>
+
+      <div class="row">
+        <input id="question" placeholder="Pose ta question..." />
+        <button onclick="send()">Envoyer</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const supabaseUrl = "COLLE_URL_SUPABASE";
+  const supabaseKey = "COLLE_ANON_KEY";
+  const db = supabase.createClient(supabaseUrl, supabaseKey);
+
+  const box = document.getElementById("messages");
+  const input = document.getElementById("question");
+
+  function addLine(cls, who, text){
+    box.innerHTML += `<div class="bubble ${cls}"><b>${who}</b> ${escapeHtml(text)}</div>`;
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, m => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[m]));
+  }
+
+  async function send(){
+    const q = input.value.trim();
+    if(!q) return;
+
+    addLine("me","Toi :", q);
+    input.value = "";
+
+    // 1) Sauvegarder dans Supabase
+    const { error } = await db.from("messages").insert({ message: q });
+
+    if(error){
+      addLine("bot","AlexGPT :", "Erreur Supabase ❌ (RLS ou clé).");
+      return;
+    }
+
+    // 2) Réponse “prototype” (pas encore l’IA GPT)
+    addLine("bot","AlexGPT :", "Message enregistré ✅");
+  }
+
+  // Enter pour envoyer
+  input.addEventListener("keydown", (e) => {
+    if(e.key === "Enter") send();
+  });
+</script>
+
+</body>
+</html> 

@@ -1,0 +1,2 @@
+const supabaseUrl = "COLLE_URL_SUPABASE";
+const supabaseKey = "COLLE_ANON_KEY";
